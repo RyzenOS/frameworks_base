@@ -348,6 +348,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
     private ContentObserver mDeviceProvisionedObserver;
     private ContentObserver mSfpsRequireScreenOnToAuthPrefObserver;
     private final ContentObserver mTimeFormatChangeObserver;
+    private ContentObserver mFpWakeUnlockObserver;
 
     private boolean mSwitchingUser;
 
@@ -385,6 +386,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
     private boolean mLogoutEnabled;
     private boolean mIsFaceEnrolled;
     private int mActiveMobileDataSubscription = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+
+    private boolean mFingerprintWakeAndUnlock;
 
     /**
      * Short delay before restarting fingerprint authentication after a successful try. This should
@@ -2107,6 +2110,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 .collect(Collectors.toSet());
         mFaceWakeUpTriggersConfig = faceWakeUpTriggersConfig;
 
+        updateFpWakeUnlockStatus();
+
         mHandler = new Handler(mainLooper) {
             @Override
             public void handleMessage(Message msg) {
@@ -2328,11 +2333,35 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 Settings.System.getUriFor(Settings.System.TIME_12_24),
                 false, mTimeFormatChangeObserver, UserHandle.USER_ALL);
 
+        mFpWakeUnlockObserver = new ContentObserver(mHandler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                updateFpWakeUnlockStatus();
+            }
+        };
+
+        mContext.getContentResolver().registerContentObserver(
+            Settings.System.getUriFor(Settings.System.FP_WAKE_UNLOCK), false, mFpWakeUnlockObserver, UserHandle.USER_ALL);
+    }
+
+    private void updateFpWakeUnlockStatus() {
+        mFingerprintWakeAndUnlock = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.FP_WAKE_UNLOCK, 0,
+                UserHandle.USER_CURRENT) == 0;
+    }
+
         updateSfpsRequireScreenOnToAuthPref();
         mSfpsRequireScreenOnToAuthPrefObserver = new ContentObserver(mHandler) {
             @Override
             public void onChange(boolean selfChange) {
                 updateSfpsRequireScreenOnToAuthPref();
+            }
+        };
+
+        mFpWakeUnlockObserver = new ContentObserver(mHandler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                updateFpWakeUnlockStatus();
             }
         };
 
@@ -2715,7 +2744,18 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         final int user = getCurrentUser();
         final boolean userDoesNotHaveTrust = !getUserHasTrust(user);
         final boolean shouldListenForFingerprintAssistant = shouldListenForFingerprintAssistant();
-        final boolean shouldListenKeyguardState =
+        final boolean shouldListenKeyguardState;
+        if (!mFingerprintWakeAndUnlock) {
+            shouldListenKeyguardState =
+                (isKeyguardVisible()
+                        || mBouncerIsOrWillBeShowing
+                        || shouldListenForFingerprintAssistant
+                        || (mKeyguardOccluded && mIsDreaming))
+                        && mDeviceInteractive && !mGoingToSleep && !mKeyguardGoingAway
+                        || (mKeyguardOccluded && userDoesNotHaveTrust
+                            && (mOccludingAppRequestingFp || isUdfps));
+        } else {
+            shouldListenKeyguardState =
                 isKeyguardVisible()
                         || !mDeviceInteractive
                         || (mPrimaryBouncerIsOrWillBeShowing && !mKeyguardGoingAway)
@@ -2724,6 +2764,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                         || (mKeyguardOccluded && mIsDreaming)
                         || (mKeyguardOccluded && userDoesNotHaveTrust
                             && (mOccludingAppRequestingFp || isUdfps));
+        }
 
         // Only listen if this KeyguardUpdateMonitor belongs to the primary user. There is an
         // instance of KeyguardUpdateMonitor for each user but KeyguardUpdateMonitor is user-aware.
@@ -2752,6 +2793,11 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
             shouldListenSideFpsState =
                     mSfpsRequireScreenOnToAuthPrefEnabled ? isDeviceInteractive() : true;
         }
+        
+        boolean shouldListenFpWakeUnlockState = true;
+
+        final boolean shouldListen = shouldListenKeyguardState && shouldListenUserState
+                && shouldListenBouncerState && shouldListenUdfpsState && !isFingerprintLockedOut();
 
         boolean shouldListen = shouldListenKeyguardState && shouldListenUserState
                 && shouldListenBouncerState && shouldListenUdfpsState
@@ -3933,6 +3979,10 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
 
         if (mSettingsObserver != null) {
             mSettingsObserver.unobserve();
+        }
+        
+        if (mFpWakeUnlockObserver != null) {
+            mContext.getContentResolver().unregisterContentObserver(mFpWakeUnlockObserver);
         }
 
         try {
