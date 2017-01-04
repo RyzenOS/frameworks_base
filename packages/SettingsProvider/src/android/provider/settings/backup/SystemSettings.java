@@ -89,5 +89,7 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.FULLSCREEN_GESTURES,
         Settings.System.FP_WAKE_UNLOCK,
+        Settings.System.NETWORK_TRAFFIC_STATE,
+        Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD,
     };
 }
