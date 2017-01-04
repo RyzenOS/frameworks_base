@@ -90,5 +90,7 @@ public class SystemSettings {
         // RyzenOS additions
         Settings.System.TORCH_POWER_BUTTON_GESTURE,
         Settings.System.ENABLE_RIPPLE_EFFECT,
+        Settings.System.NETWORK_TRAFFIC_STATE,
+        Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD,
     };
 }
