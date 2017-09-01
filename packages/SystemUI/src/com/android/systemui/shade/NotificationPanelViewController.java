@@ -81,6 +81,7 @@ import android.util.IndentingPrintWriter;
 import android.util.Log;
 import android.util.MathUtils;
 import android.view.InputDevice;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -228,6 +229,8 @@ import com.android.systemui.util.LargeScreenUtils;
 import com.android.systemui.util.Utils;
 import com.android.systemui.util.time.SystemClock;
 import com.android.wm.shell.animation.FlingAnimationUtils;
+
+import com.android.internal.util.ryzen.RyzenUtils;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -405,6 +408,11 @@ public final class NotificationPanelViewController implements Dumpable {
     private OpenCloseListener mOpenCloseListener;
     private GestureRecorder mGestureRecorder;
     private boolean mQsTracking;
+
+    private GestureDetector mLockscreenDoubleTapToSleep;
+    private boolean mIsLockscreenDoubleTapEnabled;
+
+
     /** Whether the ongoing gesture might both trigger the expansion in both the view and QS. */
     private boolean mConflictingQsExpansionGesture;
     private boolean mPanelExpanded;
@@ -963,6 +971,16 @@ public final class NotificationPanelViewController implements Dumpable {
         updateUserSwitcherFlags();
         mKeyguardBottomAreaViewModel = keyguardBottomAreaViewModel;
         mKeyguardBottomAreaInteractor = keyguardBottomAreaInteractor;
+
+        mLockscreenDoubleTapToSleep = new GestureDetector(context,
+                new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                RyzenUtils.switchScreenOff(context);
+                return true;
+            }
+        });
+
         onFinishInflate();
         keyguardUnlockAnimationController.addKeyguardUnlockAnimationListener(
                 new KeyguardUnlockAnimationController.KeyguardUnlockAnimationListener() {
@@ -4641,6 +4659,11 @@ public final class NotificationPanelViewController implements Dumpable {
         updateMaxDisplayedNotifications(true);
     }
 
+    public void setLockscreenDoubleTapToSleep(boolean isDoubleTapEnabled) {
+        mIsLockscreenDoubleTapEnabled = isDoubleTapEnabled
+    }
+
+
     public void resetTranslation() {
         mView.setTranslationX(0f);
     }
@@ -6109,6 +6132,11 @@ public final class NotificationPanelViewController implements Dumpable {
                 return false;
             }
 
+            if (mIsLockscreenDoubleTapEnabled && !mPulsing && !mDozing
+                    && mStatusBarState == StatusBarState.KEYGUARD) {
+                mLockscreenDoubleTapToSleep.onTouchEvent(event);
+            }
+            
             // Make sure the next touch won't the blocked after the current ends.
             if (event.getAction() == MotionEvent.ACTION_UP
                     || event.getAction() == MotionEvent.ACTION_CANCEL) {
