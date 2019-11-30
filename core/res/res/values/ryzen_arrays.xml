@@ -57,4 +57,7 @@
         <item>voiceassist</item>
         <item>restart</item>
     </string-array>
+
+    <!-- Width of the battery icon in the status bar when set to circle style. -->
+    <dimen name="status_bar_battery_icon_circle_width">13.5dp</dimen>
 </resources>
