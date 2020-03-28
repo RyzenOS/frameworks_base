@@ -95,6 +95,8 @@ open class KeyguardBypassController : Dumpable, StackScrollAlgorithm.BypassContr
 
     var bypassEnabledBiometric: Boolean = false
 
+    var faceUnlockMethod: Int = 0
+
     var bouncerShowing: Boolean = false
     var altBouncerShowing: Boolean = false
     var launchingAffordance: Boolean = false
@@ -129,6 +131,7 @@ open class KeyguardBypassController : Dumpable, StackScrollAlgorithm.BypassContr
             }
         })
 
+<<<<<<< HEAD
         shadeExpansionStateManager.addQsExpansionListener { isQsExpanded ->
             val changed = qsExpanded != isQsExpanded
             qsExpanded = isQsExpanded
@@ -144,6 +147,26 @@ open class KeyguardBypassController : Dumpable, StackScrollAlgorithm.BypassContr
                 bypassEnabledBiometric = tunerService.getValue(key, dismissByDefault) != 0
             }
         }, Settings.Secure.FACE_UNLOCK_DISMISSES_KEYGUARD)
+=======
+        if (context.resources.getBoolean(
+                com.android.internal.R.bool.config_faceAuthOnlyOnSecurityView)){
+            bypassEnabledBiometric = false
+        }else{
+            tunerService.addTunable(object : TunerService.Tunable {
+                override fun onTuningChanged(key: String?, newValue: String?) {
+                    faceUnlockMethod = tunerService.getValue(key, 0)
+                }
+            }, Settings.Secure.FACE_UNLOCK_METHOD)
+            val dismissByDefault = if (context.resources.getBoolean(
+                            com.android.internal.R.bool.config_faceAuthDismissesKeyguard)) 1 else 0
+            tunerService.addTunable(object : TunerService.Tunable {
+                override fun onTuningChanged(key: String?, newValue: String?) {
+                    bypassEnabledBiometric = (faceUnlockMethod == 0 &&
+                        tunerService.getValue(key, dismissByDefault) != 0)
+                }
+            }, Settings.Secure.FACE_UNLOCK_DISMISSES_KEYGUARD)
+        }
+>>>>>>> f580b1318b43 ([1/2] Allow changing face unlock method when locked)
         lockscreenUserManager.addUserChangedListener(
                 object : NotificationLockscreenUserManager.UserChangedListener {
                     override fun onUserChanged(userId: Int) {
