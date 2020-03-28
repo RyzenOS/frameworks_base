@@ -32,4 +32,7 @@
     <!-- The list of package IDs that are not allowed to use aux cameras. -->
     <string-array name="config_cameraAuxPackageExcludeList" translatable="false" />
 
+    <!-- Enable face auth only when swiping security view -->
+    <bool name="config_faceAuthOnlyOnSecurityView">false</bool>
+    
 </resources>
