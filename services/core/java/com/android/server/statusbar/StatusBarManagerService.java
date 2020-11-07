@@ -355,6 +355,16 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
                 }
             }
         }
+        
+        @Override
+        public void startAssist(Bundle args) {
+            if (mBar != null) {
+                try {
+                    mBar.startAssist(args);
+                } catch (RemoteException e) {
+                }
+            }
+        }
 
         @Override
         public void onCameraLaunchGestureDetected(int source) {
