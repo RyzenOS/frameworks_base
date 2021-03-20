@@ -109,6 +109,8 @@ public class QuickStatusBarHeader extends FrameLayout {
     private List<String> mRssiIgnoredSlots = List.of();
     private boolean mIsSingleCarrier;
 
+    private boolean mHasLeftCutout;
+    private boolean mHasRightCutout;
     private boolean mHasCenterCutout;
     private boolean mConfigShowBatteryEstimate;
 
@@ -464,6 +466,12 @@ public class QuickStatusBarHeader extends FrameLayout {
                 mClockIconsSeparatorLayoutParams.width = 0;
                 setSeparatorVisibility(false);
                 mShowClockIconsSeparator = false;
+                if (sbInsets.first != 0) {
+                    mHasLeftCutout = true;
+                }
+                if (sbInsets.second != 0) {
+                    mHasRightCutout = true;
+                }
                 mHasCenterCutout = false;
             } else {
                 datePrivacySeparatorLayoutParams.width = topCutout.width();
@@ -471,6 +479,8 @@ public class QuickStatusBarHeader extends FrameLayout {
                 mClockIconsSeparatorLayoutParams.width = topCutout.width();
                 mShowClockIconsSeparator = true;
                 setSeparatorVisibility(mKeyguardExpansionFraction == 0f);
+                mHasLeftCutout = false;
+                mHasRightCutout = false;
                 mHasCenterCutout = true;
             }
         }
