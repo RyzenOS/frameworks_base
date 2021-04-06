@@ -952,20 +952,20 @@ public class PackageInfoWithoutStateUtils {
         if (pkg instanceof ParsingPackageImpl) {
             ParsingPackageImpl pkgi = (ParsingPackageImpl) pkg;
             privateFlagsExt = flag(pkgi.isProfileable(), ApplicationInfo.PRIVATE_FLAG_EXT_PROFILEABLE)
-                | flag(pkgi.hasRequestForegroundServiceExemption(),
-                        ApplicationInfo.PRIVATE_FLAG_EXT_REQUEST_FOREGROUND_SERVICE_EXEMPTION)
-                | flag(pkgi.areAttributionsUserVisible(),
-                        ApplicationInfo.PRIVATE_FLAG_EXT_ATTRIBUTIONS_ARE_USER_VISIBLE)
-                | flag(pkgi.isOnBackInvokedCallbackEnabled(),
-                        ApplicationInfo.PRIVATE_FLAG_EXT_ENABLE_ON_BACK_INVOKED_CALLBACK);
+                    | flag(pkgi.hasRequestForegroundServiceExemption(),
+                    ApplicationInfo.PRIVATE_FLAG_EXT_REQUEST_FOREGROUND_SERVICE_EXEMPTION)
+                    | flag(pkgi.areAttributionsUserVisible(),
+                    ApplicationInfo.PRIVATE_FLAG_EXT_ATTRIBUTIONS_ARE_USER_VISIBLE)
+                    | flag(pkgi.isOnBackInvokedCallbackEnabled(),
+                    ApplicationInfo.PRIVATE_FLAG_EXT_ENABLE_ON_BACK_INVOKED_CALLBACK);
         } else {
             privateFlagsExt = flag(pkg.isProfileable(), ApplicationInfo.PRIVATE_FLAG_EXT_PROFILEABLE)
-                | flag(pkg.hasRequestForegroundServiceExemption(),
-                        ApplicationInfo.PRIVATE_FLAG_EXT_REQUEST_FOREGROUND_SERVICE_EXEMPTION)
-                | flag(pkg.areAttributionsUserVisible(),
-                        ApplicationInfo.PRIVATE_FLAG_EXT_ATTRIBUTIONS_ARE_USER_VISIBLE)
-                | flag(pkg.isOnBackInvokedCallbackEnabled(),
-                        ApplicationInfo.PRIVATE_FLAG_EXT_ENABLE_ON_BACK_INVOKED_CALLBACK);
+                            | flag(pkg.hasRequestForegroundServiceExemption(),
+                            ApplicationInfo.PRIVATE_FLAG_EXT_REQUEST_FOREGROUND_SERVICE_EXEMPTION)
+                            | flag(pkg.areAttributionsUserVisible(),
+                            ApplicationInfo.PRIVATE_FLAG_EXT_ATTRIBUTIONS_ARE_USER_VISIBLE)
+                            | flag(pkg.isOnBackInvokedCallbackEnabled(),
+                            ApplicationInfo.PRIVATE_FLAG_EXT_ENABLE_ON_BACK_INVOKED_CALLBACK);
         }
         // @formatter:on
         return privateFlagsExt;
