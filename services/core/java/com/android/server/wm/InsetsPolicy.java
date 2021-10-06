@@ -49,7 +49,6 @@ import android.app.WindowConfiguration;
 import android.content.ComponentName;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.util.ArrayMap;
 import android.util.IntArray;
 import android.util.SparseArray;
 import android.view.InsetsAnimationControlCallbacks;
