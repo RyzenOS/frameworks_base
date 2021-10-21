@@ -23,7 +23,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toolbar;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragment;
@@ -61,12 +60,6 @@ public class TunerActivity extends CollapsingToolbarBaseActivity implements
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         setContentView(R.layout.tuner_activity);
-/*
-        Toolbar toolbar = findViewById(R.id.action_bar);
-        if (toolbar != null) {
-            setActionBar(toolbar);
-        }
-*/
         if (getFragmentManager().findFragmentByTag(TAG_TUNER) == null) {
             final String action = getIntent().getAction();
             final Fragment fragment;
