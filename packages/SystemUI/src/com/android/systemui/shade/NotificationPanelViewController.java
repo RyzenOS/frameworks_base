@@ -378,6 +378,12 @@ public final class NotificationPanelViewController implements Dumpable {
     private boolean mSplitShadeEnabled;
     /** The bottom padding reserved for elements of the keyguard measuring notifications. */
     private float mKeyguardNotificationBottomPadding;
+
+    // Cap and total height of GSans Clock font. Needs to be adjusted when font for the big clock is
+    // changed.
+    private static final int CAP_HEIGHT = 716;
+    private static final int FONT_HEIGHT = 827;
+    
     /**
      * The top padding from where notification should start in lockscreen.
      * Should be static also during animations and should match the Y of the first notification.
@@ -5808,8 +5814,11 @@ public final class NotificationPanelViewController implements Dumpable {
             updateMaxDisplayedNotifications(!shouldAvoidChangingNotificationsCount());
             setIsFullWidth(mNotificationStackScrollLayoutController.getWidth() == mView.getWidth());
 
-            // Update Clock Pivot (used by anti-burnin transformations)
-            mKeyguardStatusViewController.updatePivot(mView.getWidth(), mView.getHeight());
+            // Update Clock Pivot
+            mKeyguardStatusViewController.setPivotX(mView.getWidth() / 2);
+            mKeyguardStatusViewController.setPivotY(
+                    (FONT_HEIGHT - CAP_HEIGHT) / 1000f
+                            * mKeyguardStatusViewController.getClockTextSize());
 
             // Calculate quick setting heights.
             int oldMaxHeight = mQsMaxExpansionHeight;
