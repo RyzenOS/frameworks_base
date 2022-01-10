@@ -91,5 +91,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.FULLSCREEN_GESTURES,
         Settings.System.FP_WAKE_UNLOCK,
+        Settings.System.ENABLE_RIPPLE_EFFECT,
     };
 }
