@@ -87,6 +87,8 @@ public class SystemSettings {
         Settings.System.DISPLAY_COLOR_MODE,
         Settings.System.ALARM_ALERT,
         Settings.System.NOTIFICATION_LIGHT_PULSE,
+        // RyzenOS additions
         Settings.System.TORCH_POWER_BUTTON_GESTURE,
+        Settings.System.ENABLE_RIPPLE_EFFECT,
     };
 }
