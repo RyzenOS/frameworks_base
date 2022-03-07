@@ -119,5 +119,11 @@
          values/config.xml) and must be truncated. [CHAR LIMIT=4] -->
     <string name="status_bar_notification_info_overflow" translatable="false">\u221E</string>
 
+    <!-- Statusbar tuner -->
+    <string name="statusbar_items_title">Statusbar icons</string>
+    <string name="status_bar_vpn">VPN</string>
+    <string name="status_bar_data_saver">Data saver</string>
+    <string name="status_bar_call_strength">Call strength</string>
+    <string name="status_bar_roaming">Roaming indicator</string>
 
 </resources>
