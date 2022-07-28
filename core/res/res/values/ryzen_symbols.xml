@@ -61,6 +61,9 @@
     <java-symbol type="array" name="config_cameraAuxPackageExcludeList" />
     <java-symbol type="array" name="config_cameraHFRPrivAppList" />
 
+    <!-- Paths to OP warp charging status file -->
+    <java-symbol type="string" name="config_opWarpChargerStatusPaths" />
+    
     <!-- Whether device has dash charging support -->
     <java-symbol type="bool" name="config_hasDashCharger" />
 
