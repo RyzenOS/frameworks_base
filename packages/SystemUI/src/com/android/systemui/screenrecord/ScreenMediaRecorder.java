@@ -93,6 +93,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
     private ScreenRecordingAudioSource mAudioSource;
     private final MediaProjectionCaptureTarget mCaptureRegion;
     private final Handler mHandler;
+    private String mAvcProfileLevel;
     private int mMaxRefreshRate;
     private String mAvcProfileLevel;
 
