@@ -65,6 +65,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
+import com.android.internal.util.ryzen.AttestationHooks;
 import com.android.internal.util.ryzen.PixelPropsUtils;
 
 /**
