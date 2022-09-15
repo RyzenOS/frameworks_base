@@ -21,6 +21,7 @@ import android.app.StatusBarManager
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.graphics.Color
 import android.os.Trace
