@@ -7440,5 +7440,9 @@ message MetricsEvent {
 
     // RYZEN metrics constant
     RYZEN = 2999;
+
+    // OPEN: Settings > Display > Full screen apps
+    // OS: T
+    DISPLAY_CUTOUT_FORCE_FULLSCREEN = 1999;
   }
 }
