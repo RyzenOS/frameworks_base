@@ -284,6 +284,11 @@ public class BcSmartspaceView extends FrameLayout implements BcSmartspaceDataPlu
         this.mAdapter.notifyDataSetChanged();
     }
 
+    public void setSelectedPage(int page) {
+        mViewPager.setCurrentItem(page, false);
+        mPageIndicator.setPageOffset(page, 0.0f);
+    }
+    
     public void logSmartspaceEvent(SmartspaceTarget smartspaceTarget, int rank, BcSmartspaceEvent bcSmartspaceEvent) {
         int i2;
         BcSmartspaceSubcardLoggingInfo createSubcardLoggingInfo;
