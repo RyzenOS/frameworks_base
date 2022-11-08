@@ -287,6 +287,14 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
                 }
             }
         }
+
+        @Override
+        public void onBiometricAuthenticated(int userId, BiometricSourceType biometricSourceType,
+                boolean isStrongBiometric) {
+            if (biometricSourceType == BiometricSourceType.FACE) {
+                hideFaceRecognizingMessage();
+            }
+        }
     };
 
     @Inject
@@ -1341,6 +1349,10 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         }
     }
 
+    private void hideFaceRecognizingMessage(){
+        showBouncerMessage("", null);
+    }
+    
     /** Display security message to relevant KeyguardMessageArea. */
     public void setKeyguardMessage(String message, ColorStateList colorState) {
         if (isShowingAlternateAuth()) {
