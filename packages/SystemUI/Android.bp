@@ -123,6 +123,7 @@ android_library {
         "jsr330",
         "lottie",
         "faceunlock_framework",
+        "ryzen-preference",
     ],
     manifest: "AndroidManifest.xml",
 
