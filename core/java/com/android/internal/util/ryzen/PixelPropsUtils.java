@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.internal.util.custom;
+package com.android.internal.util.ryzen;
 
 import android.app.Application;
 import android.os.Build;
@@ -30,7 +30,7 @@ import java.util.Map;
 public class PixelPropsUtils {
 
     public static final String PACKAGE_GMS = "com.google.android.gms";
-    private static final String DEVICE = "ro.custom.device";
+    private static final String DEVICE = "ro.ryzen.device";
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final boolean DEBUG = false;
 
