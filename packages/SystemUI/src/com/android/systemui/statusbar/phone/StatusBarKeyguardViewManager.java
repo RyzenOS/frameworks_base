@@ -1352,6 +1352,16 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private void hideFaceRecognizingMessage(){
         showBouncerMessage("", null);
     }
+
+    public void showBouncerMessage(String message, ColorStateList colorState) {
+        if (isShowingAlternateAuth()) {
+            if (mKeyguardMessageAreaController != null) {
+                mKeyguardMessageAreaController.setMessage(message);
+            }
+        } else {
+            mBouncer.showMessage(message, colorState);
+        }
+    }
     
     /** Display security message to relevant KeyguardMessageArea. */
     public void setKeyguardMessage(String message, ColorStateList colorState) {

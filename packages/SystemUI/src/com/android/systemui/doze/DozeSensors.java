@@ -557,7 +557,7 @@ public class DozeSensors {
                     requiresTouchscreen,
                     false /* ignoresSetting */,
                     false /* requiresProx */,
-                    true /* immediatelyReRegister */
+                    true /* immediatelyReRegister */,
                     performsProxCheck
             );
         }

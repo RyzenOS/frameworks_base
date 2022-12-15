@@ -48,6 +48,7 @@ public abstract class SystemUIInitializer {
     private WMComponent mWMComponent;
     private SysUIComponent mSysUIComponent;
     private InitializationChecker mInitializationChecker;
+    private boolean mInitializeComponents;
 
     public SystemUIInitializer(Context context) {
         mContext = context;
