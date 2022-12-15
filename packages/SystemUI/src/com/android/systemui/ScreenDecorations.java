@@ -145,6 +145,8 @@ public class ScreenDecorations implements CoreStartable, Tunable , Dumpable {
     private int mProviderRefreshToken = 0;
     @VisibleForTesting
     protected OverlayWindow[] mOverlays = null;
+    @Nullable
+    DisplayCutoutView[] mCutoutViews;
     @VisibleForTesting
     ViewGroup mScreenDecorHwcWindow;
     @VisibleForTesting

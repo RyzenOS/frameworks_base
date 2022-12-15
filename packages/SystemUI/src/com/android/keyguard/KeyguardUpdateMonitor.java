@@ -3980,7 +3980,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         if (mSettingsObserver != null) {
             mSettingsObserver.unobserve();
         }
-        
+
         if (mFpWakeUnlockObserver != null) {
             mContext.getContentResolver().unregisterContentObserver(mFpWakeUnlockObserver);
         }
