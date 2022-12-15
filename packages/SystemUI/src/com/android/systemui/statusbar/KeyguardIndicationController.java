@@ -184,6 +184,7 @@ public class KeyguardIndicationController {
     private boolean mBatteryPresent = true;
     private long mChargingTimeRemaining;
     private String mBiometricErrorMessageToShowOnScreenOn;
+    private String mMessageToShowOnScreenOn;
     private final Set<Integer> mCoExFaceAcquisitionMsgIdsToShow;
     private final FaceHelpMessageDeferral mFaceAcquiredMessageDeferral;
     private boolean mInited;
@@ -985,7 +986,7 @@ public class KeyguardIndicationController {
         pw.println("  mPowerCharged: " + mPowerCharged);
         pw.println("  mChargingSpeed: " + mChargingSpeed);
         pw.println("  mChargingWattage: " + mChargingWattage);
-        pw.println("  mMessageToShowOnScreenOn: " + mBiometricErrorMessageToShowOnScreenOn);
+        pw.println("  mMessageToShowOnScreenOn: " + mMessageToShowOnScreenOn);
         pw.println("  mDozing: " + mDozing);
         pw.println("  mTransientIndication: " + mTransientIndication);
         pw.println("  mBiometricMessage: " + mBiometricMessage);
