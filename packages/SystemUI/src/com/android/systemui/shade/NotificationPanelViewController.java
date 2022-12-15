@@ -295,11 +295,6 @@ public final class NotificationPanelViewController extends PanelViewController {
     private final NotificationStackScrollLayoutController mNotificationStackScrollLayoutController;
     private final NotificationIconAreaController mNotificationIconAreaController;
 
-    // Cap and total height of GSans Clock font. Needs to be adjusted when font for the big clock is
-    // changed.
-    private static final int CAP_HEIGHT = 716;
-    private static final int FONT_HEIGHT = 827;
-
     /**
      * Maximum time before which we will expand the panel even for slow motions when getting a
      * touch passed over from launcher.
@@ -4857,11 +4852,8 @@ public final class NotificationPanelViewController extends PanelViewController {
             updateMaxDisplayedNotifications(!shouldAvoidChangingNotificationsCount());
             setIsFullWidth(mNotificationStackScrollLayoutController.getWidth() == mView.getWidth());
 
-            // Update Clock Pivot
-            mKeyguardStatusViewController.setPivotX(mView.getWidth() / 2);
-            mKeyguardStatusViewController.setPivotY(
-                    (FONT_HEIGHT - CAP_HEIGHT) / 1000f
-                            * mKeyguardStatusViewController.getClockTextSize());
+            // Update Clock Pivot (used by anti-burnin transformations)
+            mKeyguardStatusViewController.updatePivot(mView.getWidth(), mView.getHeight());
 
             // Calculate quick setting heights.
             int oldMaxHeight = mQsMaxExpansionHeight;
