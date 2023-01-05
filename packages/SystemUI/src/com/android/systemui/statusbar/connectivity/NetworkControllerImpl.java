@@ -795,7 +795,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
         if (volte1 && volte2) {
             return R.drawable.stat_sys_volte_slot12;
         } else if (volte1) {
-           return R.drawable.stat_sys_volte_slot1;
+            return mSwap ? R.drawable.stat_sys_volte_slot2 : R.drawable.stat_sys_volte_slot1;
         } else if (volte2) {
             return R.drawable.stat_sys_volte_slot2;
         }
@@ -1006,6 +1006,14 @@ public class NetworkControllerImpl extends BroadcastReceiver
         return false;
     }
 
+    private boolean isSwap(final @Nullable List<SubscriptionInfo> list) {
+        if (list != null && list.size() == 2) {
+            if (list.get(0).getSubscriptionId() > list.get(1).getSubscriptionId())
+                return true;
+        }
+        return false;
+    }
+
     @GuardedBy("mLock")
     @VisibleForTesting
     void setCurrentSubscriptionsLocked(List<SubscriptionInfo> subscriptions) {
@@ -1017,6 +1025,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
                         : lhs.getSimSlotIndex() - rhs.getSimSlotIndex();
             }
         });
+        mSwap = isSwap(subscriptions);
         Log.i(
                 TAG,
                 String.format(
