@@ -165,6 +165,12 @@ public abstract class LogoImage extends ImageView {
             case 11:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_xbox);
                 break;
+            case 12:
+                drawable = mContext.getResources().getDrawable(R.drawable.ic_tux_logo);
+                break;
+            case 13:
+                drawable = mContext.getResources().getDrawable(R.drawable.ic_mint_logo);
+                break;
         }
 
         drawable.setTint(mTintColor);
