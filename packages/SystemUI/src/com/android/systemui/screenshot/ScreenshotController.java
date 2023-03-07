@@ -466,6 +466,7 @@ public class ScreenshotController {
     // Any cleanup needed when the service is being destroyed.
     void onDestroy() {
         removeWindow();
+        releaseMediaPlayer();
         releaseContext();
         mBgExecutor.shutdownNow();
     }
@@ -476,6 +477,18 @@ public class ScreenshotController {
     private void releaseContext() {
         mContext.unregisterReceiver(mCopyBroadcastReceiver);
         mContext.release();
+    }
+
+    private void releaseMediaPlayer() {
+        // Note that this may block if the sound is still being loaded (very unlikely) but we can't
+        // reliably release in the background because the service is being destroyed.
+        try {
+            MediaPlayer player = mCameraSound.get();
+            if (player != null) {
+                player.release();
+            }
+        } catch (InterruptedException | ExecutionException e) {
+        }
     }
 
     /**
@@ -818,6 +831,41 @@ public class ScreenshotController {
         if (mScreenshotView != null) {
             mScreenshotView.stopInputListening();
         }
+    }
+
+    private ListenableFuture<MediaPlayer> loadCameraSound() {
+        // The media player creation is slow and needs on the background thread.
+        return CallbackToFutureAdapter.getFuture((completer) -> {
+            mBgExecutor.execute(() -> {
+                try {
+                    MediaPlayer player = MediaPlayer.create(mContext,
+                            Uri.fromFile(new File(mContext.getResources().getString(
+                                    com.android.internal.R.string.config_cameraShutterSound))),
+                            null,
+                            new AudioAttributes.Builder()
+                                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                                    .build(), AudioSystem.newAudioSessionId());
+                    completer.set(player);
+                } catch (IllegalStateException e) {
+                    Log.w(TAG, "Screenshot sound initialization failed", e);
+                    completer.set(null);
+                }
+            });
+            return "ScreenshotController#loadCameraSound";
+        });
+    }
+
+    private void playCameraSound() {
+        mCameraSound.addListener(() -> {
+            try {
+                MediaPlayer player = mCameraSound.get();
+                if (player != null) {
+                    player.start();
+                }
+            } catch (InterruptedException | ExecutionException e) {
+            }
+        }, mBgExecutor);
     }
 
     /**
