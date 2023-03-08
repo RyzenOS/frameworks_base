@@ -92,13 +92,6 @@
     <string name="screenrecord_hevc_switch_label">Enable HEVC</string>
     <string name="screenrecord_hevc_switch_summary">Use more efficient HEVC video encoding</string>
 
-    <!-- Statusbar tuner -->
-    <string name="statusbar_items_title">Statusbar icons</string>
-    <string name="status_bar_vpn">VPN</string>
-    <string name="status_bar_data_saver">Data saver</string>
-    <string name="status_bar_call_strength">Call strength</string>
-    <string name="status_bar_roaming">Roaming indicator</string>
-
     <!-- Sound QS Tile -->
     <string name="quick_settings_sound_label">Sound</string>
     <string name="quick_settings_sound_ring">Ring</string>
