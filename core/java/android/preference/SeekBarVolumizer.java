@@ -658,14 +658,8 @@ public class SeekBarVolumizer implements OnSeekBarChangeListener, Handler.Callba
         }
 
         private void updateVolumeSlider(int streamType, int streamValue) {
-<<<<<<< HEAD
-            final boolean streamMatch = mNotifAliasRing && mNotificationOrRing
-                    ? isNotificationOrRing(streamType) : streamType == mStreamType;
-=======
-            final boolean streamMatch = mNotificationOrRing && isNotificationStreamLinked()
-                    ? isNotificationOrRing(streamType)
-                    : (streamType == mStreamType);
->>>>>>> eb9ca667356f (frameworks: Add unlinked ringtone and notification volumes)
+            final boolean streamMatch = mNotifAliasRing && mNotificationOrRing && isNotificationStreamLinked()
+            ? isNotificationOrRing(streamType) : streamType == mStreamType;
             if (mSeekBar != null && streamMatch && streamValue != -1) {
                 final boolean muted = mAudioManager.isStreamMute(mStreamType)
                         || streamValue == 0;

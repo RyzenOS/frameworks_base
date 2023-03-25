@@ -64,8 +64,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import com.android.internal.util.evolution.AttestationHooks;
-import com.android.internal.util.evolution.PixelPropsUtils;
+import com.android.internal.util.ryzen.AttestationHooks;
+import com.android.internal.util.ryzen.PixelPropsUtils;
 
 /**
  * Base class for implementing application instrumentation code.  When running

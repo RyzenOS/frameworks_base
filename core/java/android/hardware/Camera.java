@@ -359,7 +359,9 @@ public class Camera {
         if (cameraId >= getNumberOfCameras()) {
             throw new RuntimeException("Unknown camera ID");
         }
-        _getCameraInfo(cameraId, cameraInfo);
+        boolean overrideToPortrait = shouldOverrideToPortrait();
+
+        _getCameraInfo(cameraId, overrideToPortrait, cameraInfo);
         IBinder b = ServiceManager.getService(Context.AUDIO_SERVICE);
         IAudioService audioService = IAudioService.Stub.asInterface(b);
         try {

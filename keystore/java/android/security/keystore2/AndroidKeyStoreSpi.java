@@ -77,7 +77,7 @@ import java.util.Set;
 
 import javax.crypto.SecretKey;
 
-import com.android.internal.util.evolution.AttestationHooks;
+import com.android.internal.util.ryzen.AttestationHooks;
 
 /**
  * A java.security.KeyStore interface for the Android KeyStore. An instance of

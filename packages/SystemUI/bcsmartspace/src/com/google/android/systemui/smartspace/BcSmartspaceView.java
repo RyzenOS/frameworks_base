@@ -395,11 +395,6 @@ public class BcSmartspaceView extends FrameLayout implements BcSmartspaceDataPlu
         return this.mViewPager.getCurrentItem();
     }
 
-    public void setSelectedPage(int i) {
-        this.mViewPager.setCurrentItem(i, false);
-        this.mPageIndicator.setPageOffset(i, 0.0f);
-    }
-
     public void setPrimaryTextColor(int i) {
         this.mAdapter.setPrimaryTextColor(i);
         this.mPageIndicator.setPrimaryColor(i);
